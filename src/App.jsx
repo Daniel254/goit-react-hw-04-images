@@ -37,7 +37,6 @@ export default function App() {
             document.body.scrollHeight - searchBarRef.current.offsetHeight * 2
           );
         }
-        console.log(result);
         setTotalImages(result.totalHits);
         setStatus(Status.RESOLVED);
       })
