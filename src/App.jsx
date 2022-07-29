@@ -29,15 +29,16 @@ export default function App() {
     pixabayApi(searchQuery, searchPage)
       .then(result => {
         if (searchPage === 1) {
-          setImages([...result.images]);
+          setImages([...result.hits]);
           setScrollOffset(0);
         } else {
-          setImages(prev => [...prev, ...result.images]);
+          setImages(prev => [...prev, ...result.hits]);
           setScrollOffset(
             document.body.scrollHeight - searchBarRef.current.offsetHeight * 2
           );
         }
-        setTotalImages(result.total);
+        console.log(result);
+        setTotalImages(result.totalHits);
         setStatus(Status.RESOLVED);
       })
       .catch(error => {

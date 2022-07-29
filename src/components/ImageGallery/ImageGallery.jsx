@@ -5,12 +5,12 @@ import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 const ImageGallery = ({ images, openModal }) => {
   return (
     <ul className={css['ImageGallery']}>
-      {images.map(({ id, thumbImageURL, largeImageURL, alt }) => (
+      {images.map(({ id, webformatURL, largeImageURL, tags }) => (
         <ImageGalleryItem
           key={id}
-          thumbImageURL={thumbImageURL}
+          webformatURL={webformatURL}
           largeImageURL={largeImageURL}
-          alt={alt}
+          alt={tags}
           openModal={openModal}
         />
       ))}
