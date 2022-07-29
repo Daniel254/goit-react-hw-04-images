@@ -12,7 +12,7 @@ function Modal({ largeImageURL, alt, closeModal }) {
     return () => {
       window.removeEventListener('keyup', closeModal);
     };
-  }, []);
+  }, [closeModal]);
 
   return createPortal(
     <div onClick={closeModal} className={css['Overlay']}>
