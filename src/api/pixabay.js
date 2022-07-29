@@ -15,31 +15,23 @@ const axiosInstance = axios.create({
 
 const getImagesByQuery = async (q, page = 1) => {
   try {
-    const result = await axiosInstance.get('/', {
+    const {
+      data: { hits, totalHits },
+    } = await axiosInstance.get('/', {
       params: {
         q,
         page,
       },
     });
-    const receivedImages = result.data.hits.map(
-      ({ id, webformatURL, largeImageURL, tags }) => ({
-        id,
-        thumbImageURL: webformatURL,
-        largeImageURL,
-        alt: tags,
-      })
-    );
-    const quantityImages = result.data.totalHits;
 
-    if (result.data.totalHits === 0) {
+    if (totalHits === 0) {
       throw new Error('Images not found');
     }
     return {
-      images: receivedImages,
-      total: quantityImages,
+      hits,
+      totalHits,
     };
   } catch (error) {
-    // ?
     throw new Error(error.message);
   }
 };

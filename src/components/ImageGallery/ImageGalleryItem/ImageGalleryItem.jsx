@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types';
 import css from './ImageGalleryItem.module.css';
 
-function ImageGalleryItem({ thumbImageURL, largeImageURL, alt, openModal }) {
+function ImageGalleryItem({ webformatURL, largeImageURL, alt, openModal }) {
   return (
     <li
       className={css['ImageGalleryItem']}
       onClick={() => openModal(largeImageURL)}
     >
       <img
-        src={thumbImageURL}
+        src={webformatURL}
         alt={alt}
         className={css['ImageGalleryItem-image']}
       />
@@ -17,7 +17,7 @@ function ImageGalleryItem({ thumbImageURL, largeImageURL, alt, openModal }) {
 }
 
 ImageGalleryItem.propTypes = {
-  thumbImageURL: PropTypes.string.isRequired,
+  webformatURL: PropTypes.string.isRequired,
   largeImageURL: PropTypes.string.isRequired,
   alt: PropTypes.string.isRequired,
 };
