@@ -11,7 +11,7 @@ import css from './App.module.css';
 
 export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchPage, setSearchPage] = useState(1);
+  const [currentSearchPage, setCurrentSearchPage] = useState(1);
   const [images, setImages] = useState([]);
   const [totalImages, setTotalImages] = useState(null);
   const [status, setStatus] = useState(Status.IDLE);
@@ -26,9 +26,9 @@ export default function App() {
     }
 
     setStatus(Status.PENDING);
-    pixabayApi(searchQuery, searchPage)
+    pixabayApi(searchQuery, currentSearchPage)
       .then(result => {
-        if (searchPage === 1) {
+        if (currentSearchPage === 1) {
           setImages([...result.hits]);
           setScrollOffset(0);
         } else {
@@ -45,7 +45,7 @@ export default function App() {
         setImages([]);
         setError(error);
       });
-  }, [searchQuery, searchPage]);
+  }, [searchQuery, currentSearchPage]);
 
   useEffect(() => {
     if (status === Status.RESOLVED) {
@@ -56,24 +56,22 @@ export default function App() {
     }
   }, [scrollOffset, status]);
 
-  const submitHandler = e => {
+  const galleryItemClickHandler = e => {
     e.preventDefault();
-    const newSearchQuery = e.currentTarget.elements.searchQuery.value;
-    if (newSearchQuery !== searchQuery) {
-      setSearchQuery(newSearchQuery);
-      setSearchPage(1);
-    }
+    setModalImageURL(e.currentTarget.href);
   };
 
   const showLoadMoreButton = images.length > 0 && images.length < totalImages;
 
   return (
     <div className={css['App']}>
-      <Searchbar onSubmit={submitHandler} ref={searchBarRef} />
-      <ImageGallery
-        images={images}
-        openModal={largeImageURL => setModalImageURL(largeImageURL)}
+      <Searchbar
+        setSearchQuery={setSearchQuery}
+        setCurrentSearchPage={setCurrentSearchPage}
+        prevSearchQuery={searchQuery}
+        ref={searchBarRef}
       />
+      <ImageGallery images={images} openModal={galleryItemClickHandler} />
 
       {status === Status.PENDING && (
         <Oval
@@ -85,10 +83,9 @@ export default function App() {
       )}
 
       {status === Status.RESOLVED && showLoadMoreButton && (
-        <Button
-          onClick={() => setSearchPage(prev => ++prev)}
-          label="Load more"
-        />
+        <Button onClick={() => setCurrentSearchPage(prev => ++prev)}>
+          Load more
+        </Button>
       )}
 
       {status === Status.REJECTED && (
