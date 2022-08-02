@@ -1,15 +1,18 @@
-import { API_KEY } from 'constants/pixabay';
+import { PIXABAY_API_KEY, PIXABAY_BASE_URL } from 'constants/pixabay';
 
 import axios from 'axios';
 
+const defaultGetParams = {
+  page: 1,
+  image_type: 'photo',
+  orientation: 'horizontal',
+  per_page: 12,
+};
+
 const axiosInstance = axios.create({
-  baseURL: 'https://pixabay.com/api',
+  baseURL: PIXABAY_BASE_URL,
   params: {
-    page: 1,
-    key: API_KEY,
-    image_type: 'photo',
-    orientation: 'horizontal',
-    per_page: 12,
+    key: PIXABAY_API_KEY,
   },
 });
 
@@ -19,6 +22,7 @@ const getImagesByQuery = async (q, page = 1) => {
       data: { hits, totalHits },
     } = await axiosInstance.get('/', {
       params: {
+        ...defaultGetParams,
         q,
         page,
       },

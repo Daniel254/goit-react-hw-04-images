@@ -7,10 +7,15 @@ const modalRoot = document.querySelector('#modal-root');
 
 function Modal({ largeImageURL, alt, closeModal }) {
   useEffect(() => {
-    window.addEventListener('keyup', closeModal);
+    const close = e => {
+      if (e.code === 'Escape') {
+        closeModal();
+      }
+    };
+    window.addEventListener('keyup', close);
 
     return () => {
-      window.removeEventListener('keyup', closeModal);
+      window.removeEventListener('keyup', close);
     };
   }, [closeModal]);
 

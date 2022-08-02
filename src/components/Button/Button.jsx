@@ -1,17 +1,17 @@
 import PropTypes from 'prop-types';
 import css from './Button.module.css';
 
-function Button({ onClick, label }) {
+function Button({ onClick, children }) {
   return (
     <button type="button" onClick={onClick} className={css['Button']}>
-      {label}
+      {children}
     </button>
   );
 }
 
 Button.propTypes = {
   onClick: PropTypes.func.isRequired,
-  label: PropTypes.string.isRequired,
+  children: PropTypes.string.isRequired,
 };
 
 export default Button;

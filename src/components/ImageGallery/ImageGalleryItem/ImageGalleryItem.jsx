@@ -3,15 +3,14 @@ import css from './ImageGalleryItem.module.css';
 
 function ImageGalleryItem({ webformatURL, largeImageURL, alt, openModal }) {
   return (
-    <li
-      className={css['ImageGalleryItem']}
-      onClick={() => openModal(largeImageURL)}
-    >
-      <img
-        src={webformatURL}
-        alt={alt}
-        className={css['ImageGalleryItem-image']}
-      />
+    <li className={css['ImageGalleryItem']}>
+      <a href={largeImageURL} onClick={openModal}>
+        <img
+          src={webformatURL}
+          alt={alt}
+          className={css['ImageGalleryItem-image']}
+        />
+      </a>
     </li>
   );
 }
